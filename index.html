@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Para el amor de mi vida</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 20px;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #fff1f2, #ffe0e8, #fff5f5);
+      color: #4a2832;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .carta {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 620px);
+      padding: 40px;
+      background: #fffaf8ee;
+      border: 1px solid #f4ccd2;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px #7a334025;
+      line-height: 1.8;
+      animation: aparecer 1.2s ease-out both, flotar 5s ease-in-out 1.2s infinite;
+    }
+
+    h1 {
+      color: #a83250;
+      text-align: center;
+      animation: brillo 2.5s ease-in-out infinite alternate;
+    }
+
+    .firma {
+      margin-top: 30px;
+      color: #a83250;
+      font-style: italic;
+    }
+
+    .corazon {
+      position: fixed;
+      bottom: -50px;
+      z-index: 0;
+      color: #e85d75;
+      opacity: 0;
+      pointer-events: none;
+      animation: subir 7s linear infinite;
+    }
+
+    .corazon:nth-of-type(1) { left: 10%; animation-delay: 0s; font-size: 24px; }
+    .corazon:nth-of-type(2) { left: 28%; animation-delay: 2s; font-size: 18px; }
+    .corazon:nth-of-type(3) { left: 48%; animation-delay: 4s; font-size: 30px; }
+    .corazon:nth-of-type(4) { left: 70%; animation-delay: 1s; font-size: 22px; }
+    .corazon:nth-of-type(5) { left: 88%; animation-delay: 3s; font-size: 28px; }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes flotar {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -8px; }
+    }
+
+    @keyframes brillo {
+      from { text-shadow: 0 0 2px #e85d7560; }
+      to { text-shadow: 0 0 16px #e85d75aa; }
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.75; }
+      90% { opacity: 0.65; }
+      100% {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <span class="corazon" aria-hidden="true">♥</span>
+  <span class="corazon" aria-hidden="true">♥</span>
+  <span class="corazon" aria-hidden="true">♥</span>
+  <span class="corazon" aria-hidden="true">♥</span>
+  <span class="corazon" aria-hidden="true">♥</span>
+
+  <main class="carta">
+    <h1>Me enamorás cada día</h1>
+
+    <p>Mi amor:</p>
+
+    <p>
+      No sé en qué momento exacto pasó, pero un día me di cuenta de que
+      pensaba en vos a cada rato. En tu sonrisa, en tu voz, en esa forma tan
+      tuya de hacer que todo se sienta un poquito mejor. Y desde entonces,
+      quererte se volvió una de mis cosas favoritas.
+    </p>
+
+    <p>
+      Me enamora quién sos, hasta en esos detalles que capaz vos ni notás:
+      cómo mirás, cómo te reís, cómo hacés que un momento cualquiera termine
+      siendo uno de esos que quiero guardar para siempre. Con vos, hasta el
+      silencio se siente lindo.
+    </p>
+
+    <p>
+      Si pudiera pedir algo, pediría más tardes a tu lado, más abrazos de esos
+      en los que el mundo desaparece y más momentos para seguir eligiéndote.
+      Porque no quiero solamente decirte que te amo: quiero demostrártelo en
+      cada cuidado, cada palabra y cada día que compartamos.
+    </p>
+
+    <p>
+      Sos esa persona que me hace sonreír incluso cuando no estás cerca.
+      Gracias por existir, por ser vos y por dejarme quererte así, con todo
+      lo que soy.
+    </p>
+
+    <p class="firma">
+      Te amo más de lo que me entraría en esta carta.<br>
+      Siempre tuyo/a ❤️
+    </p>
+  </main>
+</body>
+</html>
