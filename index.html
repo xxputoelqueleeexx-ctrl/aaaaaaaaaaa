@@ -3,97 +3,296 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Para el amor de mi vida</title>
+  <meta name="theme-color" content="#180b24">
+  <title>Una carta para vos ❤️</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --rosa: #ff4f87;
+      --rosa-claro: #ff9ac2;
+      --violeta: #a66bff;
+      --blanco: #fff8fc;
+    }
+
     body {
       min-height: 100vh;
       margin: 0;
-      padding: 40px 20px;
+      padding: 50px 18px;
       display: grid;
       place-items: center;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #fff1f2, #ffe0e8, #fff5f5);
-      color: #4a2832;
+      color: var(--blanco);
       font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(ellipse at 15% 20%, #79246e88, transparent 40%),
+        radial-gradient(ellipse at 85% 80%, #392b9e88, transparent 40%),
+        linear-gradient(135deg, #160b22, #30102f 50%, #11152f);
     }
 
+    /* Luces de fondo */
+    .luz {
+      position: fixed;
+      z-index: -1;
+      width: 42vmax;
+      height: 42vmax;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.28;
+      pointer-events: none;
+      animation: luzViajera 12s ease-in-out infinite alternate;
+    }
+
+    .luz-rosa {
+      top: -20%;
+      left: -15%;
+      background: #ff247c;
+    }
+
+    .luz-violeta {
+      right: -20%;
+      bottom: -20%;
+      background: #693bff;
+      animation-delay: -5s;
+    }
+
+    /* Brillitos del fondo */
+    .estrellas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .estrella {
+      position: absolute;
+      color: white;
+      opacity: 0;
+      animation: titilar var(--duracion) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    /* Corazones flotantes */
+    .corazones-fondo {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .corazon-flotante {
+      position: absolute;
+      bottom: -80px;
+      left: var(--izquierda);
+      color: var(--color);
+      font-size: var(--tamano);
+      opacity: 0;
+      filter: drop-shadow(0 0 12px currentColor);
+      animation: subirCorazon var(--duracion) linear infinite;
+      animation-delay: var(--delay);
+    }
+
+    /* La carta */
     .carta {
       position: relative;
       z-index: 1;
-      width: min(100%, 620px);
-      padding: 40px;
-      background: #fffaf8ee;
-      border: 1px solid #f4ccd2;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px #7a334025;
-      line-height: 1.8;
-      animation: aparecer 1.2s ease-out both, flotar 5s ease-in-out 1.2s infinite;
+      width: min(100%, 720px);
+      padding: clamp(25px, 6vw, 58px);
+      overflow: hidden;
+      border: 1px solid #ffffff40;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #ffffff1c, #ffffff09);
+      box-shadow:
+        0 25px 80px #00000060,
+        inset 0 1px 1px #ffffff35,
+        0 0 50px #ff4f8725;
+      backdrop-filter: blur(18px);
+      animation: entradaCarta 1.3s cubic-bezier(.17,.89,.32,1.28) both;
+    }
+
+    .carta::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -60%;
+      width: 45%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, white, var(--rosa), transparent);
+      filter: blur(2px);
+      animation: bordeBrillante 4s ease-in-out infinite;
+    }
+
+    .etiqueta {
+      margin: 0 0 12px;
+      color: var(--rosa-claro);
+      font: 700 0.78rem/1.4 Arial, sans-serif;
+      letter-spacing: 0.3em;
+      text-align: center;
+      text-transform: uppercase;
+      animation: aparecer 0.7s 0.4s both;
     }
 
     h1 {
-      color: #a83250;
+      margin: 0 0 26px;
+      color: white;
+      font-size: clamp(2.2rem, 8vw, 4.5rem);
+      line-height: 1.05;
       text-align: center;
-      animation: brillo 2.5s ease-in-out infinite alternate;
+      text-shadow:
+        0 0 8px #ff4f87,
+        0 0 25px #ff4f87aa,
+        0 0 55px #a66bff99;
+      animation: tituloEntra 1s 0.35s both, latidoTitulo 2s 1.5s infinite;
     }
+
+    .separador {
+      width: 90px;
+      height: 3px;
+      margin: 0 auto 30px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--violeta), var(--rosa-claro));
+      box-shadow: 0 0 18px var(--rosa);
+      animation: crecer 0.8s 0.8s both;
+    }
+
+    .texto {
+      font-size: clamp(1rem, 2.5vw, 1.13rem);
+      line-height: 1.85;
+    }
+
+    .texto p {
+      margin: 0 0 20px;
+      opacity: 0;
+      animation: aparecer 0.8s ease-out forwards;
+    }
+
+    .texto p:nth-child(1) { animation-delay: 0.8s; }
+    .texto p:nth-child(2) { animation-delay: 1.1s; }
+    .texto p:nth-child(3) { animation-delay: 1.4s; }
+    .texto p:nth-child(4) { animation-delay: 1.7s; }
+    .texto p:nth-child(5) { animation-delay: 2s; }
 
     .firma {
-      margin-top: 30px;
-      color: #a83250;
+      margin-top: 28px;
+      color: #ffb4d0;
+      font-size: 1.15rem;
       font-style: italic;
+      text-shadow: 0 0 15px #ff4f8766;
     }
 
-    .corazon {
+    .boton-amor {
+      display: block;
+      margin: 30px auto 0;
+      padding: 14px 24px;
+      border: 1px solid #ffffff55;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(100deg, #ff3477, #a34fff);
+      box-shadow: 0 0 22px #ff347766;
+      font: 700 1rem Arial, sans-serif;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: aparecer 0.8s 2.2s both, brilloBoton 2s 3s infinite alternate;
+    }
+
+    .boton-amor:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px #ff5a9b;
+    }
+
+    .boton-amor:active {
+      transform: scale(0.96);
+    }
+
+    /* Animación del botón */
+    .explosion {
       position: fixed;
-      bottom: -50px;
-      z-index: 0;
-      color: #e85d75;
-      opacity: 0;
+      z-index: 5;
       pointer-events: none;
-      animation: subir 7s linear infinite;
+      animation: explotar 1.2s ease-out forwards;
+      filter: drop-shadow(0 0 10px #ff4f87);
     }
 
-    .corazon:nth-of-type(1) { left: 10%; animation-delay: 0s; font-size: 24px; }
-    .corazon:nth-of-type(2) { left: 28%; animation-delay: 2s; font-size: 18px; }
-    .corazon:nth-of-type(3) { left: 48%; animation-delay: 4s; font-size: 30px; }
-    .corazon:nth-of-type(4) { left: 70%; animation-delay: 1s; font-size: 22px; }
-    .corazon:nth-of-type(5) { left: 88%; animation-delay: 3s; font-size: 28px; }
+    @keyframes entradaCarta {
+      from { opacity: 0; transform: translateY(70px) scale(0.88) rotateX(12deg); }
+      to   { opacity: 1; transform: translateY(0) scale(1) rotateX(0); }
+    }
+
+    @keyframes tituloEntra {
+      from { opacity: 0; transform: scale(0.5) rotate(-8deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes latidoTitulo {
+      0%, 100% { text-shadow: 0 0 8px #ff4f87, 0 0 25px #ff4f87aa, 0 0 55px #a66bff99; }
+      50% { text-shadow: 0 0 15px #ff8ab2, 0 0 40px #ff4f87, 0 0 75px #a66bff; }
+    }
 
     @keyframes aparecer {
-      from {
-        opacity: 0;
-        transform: translateY(35px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes flotar {
-      0%, 100% { translate: 0 0; }
-      50% { translate: 0 -8px; }
+    @keyframes crecer {
+      from { opacity: 0; transform: scaleX(0); }
+      to   { opacity: 1; transform: scaleX(1); }
     }
 
-    @keyframes brillo {
-      from { text-shadow: 0 0 2px #e85d7560; }
-      to { text-shadow: 0 0 16px #e85d75aa; }
+    @keyframes bordeBrillante {
+      0% { left: -60%; }
+      55%, 100% { left: 120%; }
     }
 
-    @keyframes subir {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% { opacity: 0.75; }
-      90% { opacity: 0.65; }
+    @keyframes titilar {
+      0%, 100% { opacity: 0; transform: scale(0.6) rotate(0); }
+      50% { opacity: 0.9; transform: scale(1.2) rotate(35deg); }
+    }
+
+    @keyframes subirCorazon {
+      0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+      12% { opacity: 0.8; }
+      80% { opacity: 0.65; }
+      100% { transform: translateY(-115vh) rotate(35deg) scale(1.3); opacity: 0; }
+    }
+
+    @keyframes luzViajera {
+      from { transform: translate(0, 0) scale(0.85); }
+      to { transform: translate(15vw, 12vh) scale(1.15); }
+    }
+
+    @keyframes brilloBoton {
+      from { box-shadow: 0 0 12px #ff347755; }
+      to   { box-shadow: 0 0 30px #ff3477cc, 0 0 55px #a34fff66; }
+    }
+
+    @keyframes explotar {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.4) rotate(0); }
       100% {
-        transform: translateY(-110vh) rotate(25deg);
         opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(1.8) rotate(var(--giro));
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 22px 13px;
+      }
+
+      .carta {
+        border-radius: 22px;
+      }
+
+      .texto {
+        line-height: 1.75;
+      }
+
+      .corazon-flotante {
+        font-size: calc(var(--tamano) * 0.75);
       }
     }
 
@@ -101,54 +300,102 @@
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <span class="corazon" aria-hidden="true">♥</span>
-  <span class="corazon" aria-hidden="true">♥</span>
-  <span class="corazon" aria-hidden="true">♥</span>
-  <span class="corazon" aria-hidden="true">♥</span>
-  <span class="corazon" aria-hidden="true">♥</span>
+  <div class="luz luz-rosa"></div>
+  <div class="luz luz-violeta"></div>
+
+  <div class="estrellas" aria-hidden="true">
+    <span class="estrella" style="top:12%;left:12%;--duracion:2.1s;--delay:0s">✦</span>
+    <span class="estrella" style="top:22%;left:84%;--duracion:1.7s;--delay:.5s">✧</span>
+    <span class="estrella" style="top:77%;left:9%;--duracion:2.4s;--delay:.8s">✦</span>
+    <span class="estrella" style="top:85%;left:78%;--duracion:1.9s;--delay:.2s">✧</span>
+    <span class="estrella" style="top:45%;left:94%;--duracion:2.2s;--delay:1s">✦</span>
+    <span class="estrella" style="top:58%;left:4%;--duracion:1.8s;--delay:.3s">✧</span>
+  </div>
+
+  <div class="corazones-fondo" aria-hidden="true">
+    <span class="corazon-flotante" style="--izquierda:8%;--tamano:24px;--duracion:9s;--delay:0s;--color:#ff6b9a">♥</span>
+    <span class="corazon-flotante" style="--izquierda:25%;--tamano:18px;--duracion:11s;--delay:3s;--color:#ffc0d7">♥</span>
+    <span class="corazon-flotante" style="--izquierda:46%;--tamano:30px;--duracion:10s;--delay:1s;--color:#ff4f87">♥</span>
+    <span class="corazon-flotante" style="--izquierda:68%;--tamano:22px;--duracion:12s;--delay:5s;--color:#bd8cff">♥</span>
+    <span class="corazon-flotante" style="--izquierda:88%;--tamano:28px;--duracion:9s;--delay:2s;--color:#ff8ab2">♥</span>
+  </div>
 
   <main class="carta">
+    <p class="etiqueta">Un pedacito de mi corazón</p>
     <h1>Me enamorás cada día</h1>
+    <div class="separador"></div>
 
-    <p>Mi amor:</p>
+    <section class="texto">
+      <p>Mi amor:</p>
 
-    <p>
-      No sé en qué momento exacto pasó, pero un día me di cuenta de que
-      pensaba en vos a cada rato. En tu sonrisa, en tu voz, en esa forma tan
-      tuya de hacer que todo se sienta un poquito mejor. Y desde entonces,
-      quererte se volvió una de mis cosas favoritas.
-    </p>
+      <p>
+        No sé en qué momento exacto pasó, pero un día me di cuenta de que
+        pensaba en vos a cada rato. En tu sonrisa, en tu voz y en esa forma tan
+        tuya de hacer que todo se sienta un poquito mejor. Desde entonces,
+        quererte se volvió mi lugar favorito.
+      </p>
 
-    <p>
-      Me enamora quién sos, hasta en esos detalles que capaz vos ni notás:
-      cómo mirás, cómo te reís, cómo hacés que un momento cualquiera termine
-      siendo uno de esos que quiero guardar para siempre. Con vos, hasta el
-      silencio se siente lindo.
-    </p>
+      <p>
+        Me enamora quién sos, incluso en esos detalles que capaz ni notás:
+        cómo mirás, cómo te reís, cómo hacés que un momento cualquiera termine
+        siendo uno que quiero guardar para siempre. Con vos, hasta el silencio
+        se siente lindo.
+      </p>
 
-    <p>
-      Si pudiera pedir algo, pediría más tardes a tu lado, más abrazos de esos
-      en los que el mundo desaparece y más momentos para seguir eligiéndote.
-      Porque no quiero solamente decirte que te amo: quiero demostrártelo en
-      cada cuidado, cada palabra y cada día que compartamos.
-    </p>
+      <p>
+        Quiero más tardes a tu lado, más abrazos de esos en los que el mundo
+        desaparece y más momentos para seguir eligiéndote. No quiero solamente
+        decirte que te amo; quiero demostrártelo en cada cuidado, cada palabra
+        y cada día que compartamos.
+      </p>
 
-    <p>
-      Sos esa persona que me hace sonreír incluso cuando no estás cerca.
-      Gracias por existir, por ser vos y por dejarme quererte así, con todo
-      lo que soy.
-    </p>
+      <p>
+        Sos esa persona que me hace sonreír incluso cuando no estás cerca.
+        Gracias por existir, por ser vos y por dejarme quererte con todo lo
+        que soy. Si pudiera volver a empezar, igual te buscaría a vos.
+      </p>
 
-    <p class="firma">
-      Te amo más de lo que me entraría en esta carta.<br>
-      Siempre tuyo/a ❤️
-    </p>
+      <p class="firma">
+        Te amo más de lo que entra en esta carta.<br>
+        Siempre tuyo/a ❤️
+      </p>
+    </section>
+
+    <button class="boton-amor" id="botonAmor" type="button">
+      Tocá acá para recibir amor 💌
+    </button>
   </main>
+
+  <script>
+    const boton = document.getElementById("botonAmor");
+
+    boton.addEventListener("click", (evento) => {
+      const simbolos = ["❤️", "💖", "💕", "💘", "✨", "💗"];
+      const x = evento.clientX || window.innerWidth / 2;
+      const y = evento.clientY || window.innerHeight / 2;
+
+      for (let i = 0; i < 24; i++) {
+        const corazon = document.createElement("span");
+        corazon.className = "explosion";
+        corazon.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+        corazon.style.left = `${x}px`;
+        corazon.style.top = `${y}px`;
+        corazon.style.fontSize = `${18 + Math.random() * 22}px`;
+        corazon.style.setProperty("--x", `${(Math.random() - 0.5) * 320}px`);
+        corazon.style.setProperty("--y", `${(Math.random() - 0.5) * 300}px`);
+        corazon.style.setProperty("--giro", `${Math.random() * 180 - 90}deg`);
+
+        document.body.appendChild(corazon);
+        setTimeout(() => corazon.remove(), 1300);
+      }
+    });
+  </script>
 </body>
 </html>
